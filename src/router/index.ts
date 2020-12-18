@@ -1,25 +1,35 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Home from '../views/Home.vue'
+import type { RouteRecordRaw } from 'vue-router';
+import type { App } from 'vue';
 
-const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
-]
+import { createRouter, createWebHistory } from 'vue-router';
+
+import { createGuard } from './guard';
+
+import { basicRoutes } from './routes';
+import { scrollBehavior } from './scrollBehavior';
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
-})
+  routes: basicRoutes as RouteRecordRaw[],
+  strict: true,
+  scrollBehavior
+});
 
-export default router
+/*
+* 重置路由
+* */
+export function resetRouter() {
+  router.getRoutes().forEach(route => {
+    const { name, meta: { ignoreAuth } } = route;
+    if (name && !ignoreAuth) {
+      router.hasRoute(name) && router.removeRoute(name);
+    }
+  });
+}
+
+export function setupRouter(app: App) {
+  app.use(router);
+  createGuard(router); // 路由守卫
+}
+
+export default router;

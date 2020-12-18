@@ -1,12 +1,15 @@
-import { createStore } from 'vuex'
+import type { App } from 'vue';
+import { createStore } from 'vuex';
+import { isDevMode } from '@/utils/is';
 
-export default createStore({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
-})
+const isDev = isDevMode();
+
+const store = createStore({
+  strict: isDev
+});
+
+export function setupStore(app: App) {
+  app.use(store);
+}
+
+export default store;
