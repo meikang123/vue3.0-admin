@@ -65,7 +65,8 @@ class User extends VuexModule {
   }
 
   get getRoleListState(): User.RoleInfo[] {
-    return this.userInfoState && this.userInfoState.role ? [this.userInfoState.role] : [];
+    const userInfoState = this.getUserInfoState;
+    return userInfoState && userInfoState.role ? [userInfoState.role] : [];
   }
 
   @Mutation

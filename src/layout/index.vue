@@ -4,7 +4,8 @@
     <sidebar class="sidebar-container" :show-logo="settings.showLogo" />
     <div :class="{hasTagsView: settings.needTagsView}" class="main-container">
       <div :class="{'fixed-header': settings.fixedHeader}">
-        123456
+        <navbar />
+        123456789
       </div>
     </div>
   </section>
@@ -14,7 +15,7 @@
 import { defineComponent, computed, onBeforeUnmount, watch, unref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAppProviderContext } from '@/components/AppProvider/useAppContext';
-import { Sidebar } from './components';
+import { Sidebar, Navbar } from './components';
 import '@/styles/sidebar.scss';
 
 const WIDTH = 992;
@@ -27,7 +28,7 @@ const $_isMobile = (): boolean => {
 export default defineComponent({
   name: 'Layout',
 
-  components: { Sidebar },
+  components: { Sidebar, Navbar },
 
   setup() {
     const settings = {

@@ -51,6 +51,8 @@ export default defineComponent({
 
     const permissionRoutes = computed(() => permissionStore.getMenuListState);
 
+    console.log(permissionRoutes);
+
     return {
       variables,
       isCollapse,

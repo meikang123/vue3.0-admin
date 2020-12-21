@@ -18,6 +18,10 @@ export function isNull(val: unknown): val is null {
   return val === null;
 }
 
+export function isExternal(path: string): boolean {
+  return /^(https?:|mailto:|tel:)/.test(path);
+}
+
 export function isNullAndUnDef(val: unknown): val is null | undefined {
   return isUnDef(val) && isNull(val);
 }

@@ -3,7 +3,7 @@ import { configRoutesToRoutes } from '@/utils/router';
 
 import Layout from '@/layout/index.vue';
 
-const routeFiles = require.context('./modules', true, /\.js$/);
+const routeFiles = require.context('./modules', true, /\.ts$/);
 const routeModuleList: AppRouteModule[] = configRoutesToRoutes(routeFiles);
 
 const errRoute: AppRouteModule[] = [{
@@ -16,7 +16,7 @@ const errRoute: AppRouteModule[] = [{
   }
 }];
 
-export const asyncRoutes = [...errRoute, ...routeModuleList];
+export const asyncRoutes = [...errRoute].concat(...routeModuleList);
 
 /*
 * 基础路由 不用权限

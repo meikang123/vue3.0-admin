@@ -65,11 +65,12 @@ class Permission extends VuexModule {
     let routes: AppRouteRecordRaw[] = [];
     const roleList = toRaw(userStore.getRoleListState);
     routes = filter(asyncRoutes, route => {
-      const { meta } = route as AppRouteRecordRaw;
+      const { meta } = route;
       const { roles } = meta || {};
       if (!roles) return true;
       return roleList.some(role => roles.includes(role.id));
     });
+    console.log(routes);
     this.commitMenuListState(routes);
     return routes;
   }

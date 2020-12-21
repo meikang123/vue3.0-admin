@@ -1,4 +1,4 @@
-import { defineComponent, toRefs } from 'vue';
+import { defineComponent, toRefs, h } from 'vue';
 
 export default defineComponent({
   name: 'Item',
@@ -16,19 +16,27 @@ export default defineComponent({
 
   setup(props) {
     const { icon, title } = toRefs(props);
-    const vNodes = [];
+    const vNodes: any = [];
 
     if (icon.value) {
       if (icon.value.includes('el-icon')) {
-        vNodes.push(<i class={[icon.value, 'sub-el-icon']} />);
+        vNodes.push(h('i', {
+          class: `${icon.value} sub-el-icon`
+        }));
       } else {
-        vNodes.push(<svg-icon icon-class={icon.value}/>);
+        vNodes.push(h('svg-icon', {
+          className: 'svg-icon',
+          iconClass: icon.value
+        }));
       }
     }
-
     if (title.value) {
-      vNodes.push(<span v-slot='title'>{(title.value)}</span>);
+      vNodes.push(h('span', {
+        slot: 'title'
+      }, title.value));
     }
-    return vNodes;
+    return () => h('span', {
+      slot: 'title'
+    }, title.value);
   }
 });
